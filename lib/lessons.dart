@@ -17,13 +17,16 @@ class Lessons extends StatefulWidget {
 class Lesson {
   String mdContent;
   String path;
+  String? title;
   List<String> tags = [];
-  Lesson({required this.mdContent, required this.path}) {
+  Lesson({this.title, required this.mdContent, required this.path}) {
     tags = path.split("/");
   }
 }
 
 class _LessonsState extends State<Lessons> {
+  // static RegExp mdRE = RegExp(r"^---.*\n((.|\n)*?)\n---.*\n((.|\n)*)", multiLine: true);
+  static RegExp mdRE = RegExp(r"^---\s$((?:.|\r|\n)*)^---\s$((?:.|\r|\n)*)", multiLine: true);
   static List<Lesson> _lessons = [];
   static Random random = Random();
 
@@ -40,18 +43,21 @@ class _LessonsState extends State<Lessons> {
           Map assets = jsonDecode(_);
           int i = 0;
           assets.forEach((key, value) {
-            _lessons.add(Lesson(mdContent: "Lesson loading", path:""));
+            _lessons.add(Lesson(title: "Lesson loading", mdContent: "Lesson loading", path:""));
             int q = i;
             rootBundle.loadString(key).then((_) {
-              _lessons[q] = Lesson(mdContent: _, path: key);
+              var match = mdRE.firstMatch(_);
+              Map headers = Map.fromIterable(
+                  match?.group(1)?.split('\r?\n').map((_) => _.split(':')) ?? [],
+                  key: (_) => _[0],
+                  value: (_) => _[1]);
+              _lessons[q] = Lesson(title: headers['title'], mdContent: match?.group(2) ?? "Could not parse lesson", path: key);
             });
             ++i;
           });
         });
       });
-      _lessons.add(Lesson(mdContent: 'assetManifest', path:"nowhere"));
-      _lessons.add(Lesson(mdContent: "2 Could not find any lessons.", path:"void"));
-      _lessons.add(Lesson(mdContent: "3 Could not find any lessons.", path:"void/nullspace"));
+      _lessons.add(Lesson(title: "Asset Manifest", mdContent: 'assetManifest', path:"nowhere"));
     }
 
     return _lessons;
@@ -62,9 +68,16 @@ class _LessonsState extends State<Lessons> {
     return lessons()[_currLesson];
   }
 
-  md.Markdown displayMarkdown(Lesson lesson){
-
-    return md.Markdown(data: lesson.mdContent);
+  Widget displayMarkdown(Lesson lesson){
+    var style = md.MarkdownStyleSheet(
+      textAlign: WrapAlignment.center,
+      h1Align: WrapAlignment.center,
+    );
+    // Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         children: [
+    return md.Markdown(styleSheet: style, data: lesson.mdContent);
   }
 
   void shuffle() {

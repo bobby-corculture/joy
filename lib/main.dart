@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:corculture_personal_growth/lessons.dart';
+import 'package:corculture_personal_growth/email.dart';
 import 'package:flutter/services.dart';
 
 void main() => runApp(const MyApp());
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void lessons() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Lessons()),
+      MaterialPageRoute(builder: (context) => const Lessons()),
     );
   }
 
@@ -65,6 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void contactUs() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FeedBackPage()),
+    );
   }
 
   void donate() {
