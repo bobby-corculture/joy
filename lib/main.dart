@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:corculture_personal_growth/lessons.dart';
 import 'package:corculture_personal_growth/email.dart';
 import 'package:flutter/services.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  await AndroidAlarmManager.initialize();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
