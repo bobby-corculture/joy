@@ -1,4 +1,4 @@
-# corculture_personal_growth
+# joy aka corculture_personal_growth
 
 Corculture's app to aid personal growth.
 
