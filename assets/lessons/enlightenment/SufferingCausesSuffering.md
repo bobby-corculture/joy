@@ -6,4 +6,4 @@ comments: false
 images:
 ---
 
-See that when something or someone acts in a way that causes suffering, it’s because they haven’t been cared for or taught properly.
+See that when something or someone acts in a way that causes suffering, it's because they haven't been cared for or taught properly.

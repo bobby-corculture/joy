@@ -4,7 +4,7 @@ import 'package:corculture_personal_growth/lessons.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter_markdown/flutter_markdown.dart' as md;
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+// import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 class MeditationPage extends StatefulWidget {
   MeditationPage({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class _MeditationPageState extends State<MeditationPage> {
 
   void delayGong() {
     const int tmpAlarmID = 0;
-    AndroidAlarmManager.oneShot(const Duration(seconds: 5), tmpAlarmID, playGong);
+    // AndroidAlarmManager.oneShot(const Duration(seconds: 5), tmpAlarmID, playGong);
   }
 
   Widget displayMarkdown(Lesson lesson){
