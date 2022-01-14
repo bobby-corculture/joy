@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:corculture_personal_growth/lessons.dart';
 import 'package:corculture_personal_growth/email.dart';
 import 'package:flutter/services.dart';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+// import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 void main() async {
-  await AndroidAlarmManager.initialize();
+  // await AndroidAlarmManager.initialize();
   runApp(const MyApp());
 }
 

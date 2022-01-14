@@ -5,6 +5,6 @@ draft: false
 comments: false
 images: 
 ---
-If you find the internal work exciting, you'll come to look forward to the worst that can happen, because you won't find a problem that can't be healed from the inside.  And you'll wonder how you ever thought there was a problem – ever.  This is paradise found.
+If you find the internal work exciting, you'll come to look forward to the worst that can happen, because you won't find a problem that can't be healed from the inside.  And you'll wonder how you ever thought there was a problem - ever.  This is paradise found.
 
 -- Byron Katie
