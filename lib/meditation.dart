@@ -4,7 +4,7 @@ import 'package:corculture_personal_growth/lessons.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter_markdown/flutter_markdown.dart' as md;
-// import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 class MeditationPage extends StatefulWidget {
   MeditationPage({Key? key}) : super(key: key);
@@ -13,6 +13,19 @@ class MeditationPage extends StatefulWidget {
 
   @override
   _MeditationPageState createState() => _MeditationPageState();
+
+  static AssetsAudioPlayer? player = null;
+  static Playable gongAudio = Audio("assets/audio/gong_deep_single.ogg");
+
+  static void initialize() {
+    player = AssetsAudioPlayer.newPlayer();
+  }
+
+  static void playGong() {
+    // TODO try https://pub.dev/packages/audio_service to play
+    // in AndroidAlarmManager callback
+    player?.open(gongAudio);
+  }
 }
 
 class _MeditationPageState extends State<MeditationPage> {
@@ -21,15 +34,12 @@ class _MeditationPageState extends State<MeditationPage> {
       mdContent: '* some lesson\n* more lesson',
       path: 'random/lesson');
 
-  void playGong() {
-    AssetsAudioPlayer.newPlayer().open(
-      Audio("assets/audio/gong_deep_single.ogg"),
-    );
-  }
-
   void delayGong() {
     const int tmpAlarmID = 0;
-    // AndroidAlarmManager.oneShot(const Duration(seconds: 5), tmpAlarmID, playGong);
+    AndroidAlarmManager.oneShot(
+        const Duration(seconds: 5),
+        tmpAlarmID,
+        MeditationPage.playGong);
   }
 
   Widget displayMarkdown(Lesson lesson){
@@ -54,7 +64,7 @@ class _MeditationPageState extends State<MeditationPage> {
       persistentFooterButtons: [
         ElevatedButton(
           child: new Icon(Icons.shuffle),
-          onPressed: playGong,
+          onPressed: MeditationPage.playGong,
         ),
         ElevatedButton(
           child: new Icon(Icons.arrow_forward),

@@ -1,11 +1,15 @@
+import 'package:corculture_personal_growth/meditation.dart';
 import 'package:flutter/material.dart';
 import 'package:corculture_personal_growth/lessons.dart';
 import 'package:corculture_personal_growth/email.dart';
 import 'package:flutter/services.dart';
-// import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
-void main() async {
-  // await AndroidAlarmManager.initialize();
+Future<void> main() async {
+  // initialize flutter bindings before trying to init AndroidAlarmManager
+  WidgetsFlutterBinding.ensureInitialized();
+  await AndroidAlarmManager.initialize();
+  MeditationPage.initialize();
   runApp(const MyApp());
 }
 
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Personal Growth',
+      title: 'Joy',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Corculture Personal Growth Home'),
+      home: const MyHomePage(title: 'Joy'),
     );
   }
 }
@@ -53,36 +57,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void lessons() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Lessons()),
-    );
+  VoidCallback navigationPusher(Widget widget) {
+    return () {
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => widget),
+        );
+    };
   }
 
-  void meditate() {
-  }
-
-  void report() {
-  }
-
-  void manageMood() {
-  }
-
-  void contactUs() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FeedBackPage()),
-    );
-  }
-
-  void donate() {
-  }
-
-  void findLocalHelp() {
-  }
-
-  void offerLocalHelp() {
+  void todo() {
   }
 
   Widget makeButton({required VoidCallback onPressed, required Widget child}) {
@@ -128,42 +112,42 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Spacer(),
             makeButton(
-              onPressed: lessons,
+              onPressed: navigationPusher(const Lessons()),
               child: const Text('Lessons'),
             ),
             Spacer(),
             makeButton(
-              onPressed: meditate,
+              onPressed: navigationPusher(MeditationPage()),
               child: const Text('Meditate'),
             ),
             Spacer(),
             makeButton(
-              onPressed: report,
+              onPressed: todo,
               child: const Text('Report'),
             ),
             Spacer(),
             makeButton(
-              onPressed: manageMood,
+              onPressed: todo,
               child: const Text('Manage mood'),
             ),
             Spacer(),
             makeButton(
-              onPressed: findLocalHelp,
+              onPressed: todo,
               child: const Text('Find local help'),
             ),
             Spacer(),
             makeButton(
-              onPressed: offerLocalHelp,
+              onPressed: todo,
               child: const Text('Offer local help'),
             ),
             Spacer(),
             makeButton(
-              onPressed: donate,
+              onPressed: todo,
               child: const Text('Donate'),
             ),
             Spacer(),
             makeButton(
-              onPressed: contactUs,
+              onPressed: navigationPusher(FeedBackPage()),
               child: const Text('Contact us'),
             ),
             Spacer(),

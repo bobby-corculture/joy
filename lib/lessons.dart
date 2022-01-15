@@ -26,7 +26,7 @@ class Lesson {
 
 class _LessonsState extends State<Lessons> {
   // static RegExp mdRE = RegExp(r"^---.*\n((.|\n)*?)\n---.*\n((.|\n)*)", multiLine: true);
-  static RegExp mdRE = RegExp(r"^---\s$((?:.|\r|\n)*)^---\s$((?:.|\r|\n)*)", multiLine: true);
+  static RegExp mdRE = RegExp(r"^---(?:\s|\n)*$((?:.|\r|\n)*)^---(?:\s|\n)*$((?:.|\r|\n)*)", multiLine: true);
   static List<Lesson> _lessons = [];
   static Random random = Random();
 
@@ -43,17 +43,19 @@ class _LessonsState extends State<Lessons> {
           Map assets = jsonDecode(_);
           int i = 0;
           assets.forEach((key, value) {
-            _lessons.add(Lesson(title: "Lesson loading", mdContent: "Lesson loading", path:""));
-            int q = i;
-            rootBundle.loadString(key).then((_) {
-              var match = mdRE.firstMatch(_);
-              Map headers = Map.fromIterable(
-                  match?.group(1)?.split('\r?\n').map((_) => _.split(':')) ?? [],
-                  key: (_) => _[0],
-                  value: (_) => _[1]);
-              _lessons[q] = Lesson(title: headers['title'], mdContent: match?.group(2) ?? "Could not parse lesson", path: key);
-            });
-            ++i;
+            if (key.toString().startsWith("assets/lessons/")) {
+              _lessons.add(Lesson(title: "Lesson loading", mdContent: "Lesson loading", path:""));
+              int q = i;
+              rootBundle.loadString(key).then((_) {
+                var match = mdRE.firstMatch(_);
+                Map headers = Map.fromIterable(
+                    match?.group(1)?.split('\r?\n').map((_) => _.split(':')) ?? [],
+                    key: (_) => _[0],
+                    value: (_) => _[1]);
+                _lessons[q] = Lesson(title: headers['title'], mdContent: match?.group(2) ?? "Could not parse lesson", path: key);
+              });
+              ++i;
+            }
           });
         });
       });
