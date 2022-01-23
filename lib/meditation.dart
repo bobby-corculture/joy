@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:corculture_personal_growth/components/text_fields.dart';
 import 'package:corculture_personal_growth/lessons.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter_markdown/flutter_markdown.dart' as md;
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:corculture_personal_growth/audio_handler.dart';
 
 class MeditationPage extends StatefulWidget {
   MeditationPage({Key? key}) : super(key: key);
@@ -14,17 +13,8 @@ class MeditationPage extends StatefulWidget {
   @override
   _MeditationPageState createState() => _MeditationPageState();
 
-  static AssetsAudioPlayer? player = null;
-  static Playable gongAudio = Audio("assets/audio/gong_deep_single.ogg");
-
-  static void initialize() {
-    player = AssetsAudioPlayer.newPlayer();
-  }
-
-  static void playGong() {
-    // TODO try https://pub.dev/packages/audio_service to play
-    // in AndroidAlarmManager callback
-    player?.open(gongAudio);
+  static void playGong() async {
+    (await AudioPlayerHandler.instance()).play();
   }
 }
 

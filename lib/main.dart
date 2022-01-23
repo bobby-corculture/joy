@@ -1,15 +1,18 @@
-import 'package:corculture_personal_growth/meditation.dart';
 import 'package:flutter/material.dart';
+import 'package:audio_service/audio_service.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:corculture_personal_growth/meditation.dart';
 import 'package:corculture_personal_growth/lessons.dart';
 import 'package:corculture_personal_growth/email.dart';
-import 'package:flutter/services.dart';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:corculture_personal_growth/audio_handler.dart';
+
+late AudioHandler audioHandler; // singleton.
 
 Future<void> main() async {
   // initialize flutter bindings before trying to init AndroidAlarmManager
   WidgetsFlutterBinding.ensureInitialized();
+  await AudioPlayerHandler.instance();
   await AndroidAlarmManager.initialize();
-  MeditationPage.initialize();
   runApp(const MyApp());
 }
 
